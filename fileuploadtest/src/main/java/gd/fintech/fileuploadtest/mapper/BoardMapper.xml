@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "gd.fintech.fileuploadtest.mapper.BoardMapper">
+	<insert id="insertBoard" parameterType="gd.fintech.fileuploadtest.vo.Board">
+		<selectKey resultType="Integer" keyProperty="boardId" order="AFTER">
+			SELECT LAST_INSERT_ID(); <!-- ID() : Primary key값 -->
+		</selectKey>
+		INSERT INTO board(
+			board_title,
+			board_content
+		)VALUES(
+			#{boardTitle},
+			#{boardContent}
+		)
+		
+	</insert>
+</mapper>

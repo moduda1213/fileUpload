@@ -1,0 +1,8 @@
+* lombok을 사용하여 spring boot 파일업로드 수업 진행
+ - controller - logger 사용
+ - 
+input - file 속성 - multiple
+multiple 속성은 불리언(boolean) 속성입니다.
+불리언 속성은 해당 속성을 명시하지 않으면 속성값이 자동으로 false 값을 가지게 되며, 
+명시하면 자동으로 true 값을 가지게 됩니다.
+
