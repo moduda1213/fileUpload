@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace = "gd.fintech.fileuploadtest.mapper.BoardfileMapper">
+	<!-- 리스트 추가 -->
 	<insert id="insertBoardfile" parameterType="gd.fintech.fileuploadtest.vo.Boardfile">
 		INSERT INTO boardfile(
 			board_id,
@@ -16,4 +17,27 @@
 			#{boardfileSize}
 		)
 	</insert>
+	<!-- 리스트 삭제 -->
+	<delete id="deleteBoardfile" parameterType="Integer">
+		DELETE FROM boardfile
+		WHERE board_id=#{boardId}
+	</delete>
+	<delete id="deleteBoardfileOne" parameterType="Integer">
+		DELETE FROM boardfile
+		WHERE board_id=#{boardId}
+	</delete>
+	<!-- 삭제할 파일 이름 불러오기 -->
+	<select id="selectBoardFileNameList" parameterType="Integer" resultType="java.lang.String">
+		SELECT boardfile_name
+		FROM boardfile
+		WHERE board_id = #{boardId}
+	</select>
+	<!-- 파일 수정 -->
+	<update id="updateBoardfile" parameterType="gd.fintech.fileuploadtest.vo.Boardfile">
+		UPDATE boardfile
+		SET	boardfile_name =#{boardfileName},
+			boardfile_type=#{boardfileType},
+			boardfile_size=#{boardfileSize}
+		WHERE board_id=#{boardId}
+	</update>
 </mapper>

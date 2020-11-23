@@ -11,4 +11,5 @@ public class BoardForm {
 	private String boardTitle;
 	private String boardContent;
 	private List<MultipartFile> boardfile;
+	
 }

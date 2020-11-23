@@ -8,5 +8,11 @@
 </head>
 <body>
 	<h1>index</h1>
+	<div>
+		<a href="${pageContext.request.contextPath}/boardList/1">boardList</a>
+	</div>
+	<div>
+		<a href="${pageContext.request.contextPath}/addBoard">addBoard</a>
+	</div>
 </body>
 </html>
