@@ -8,6 +8,7 @@ import gd.fintech.fileuploadtest.mapper.BoardfileMapper;
 import gd.fintech.fileuploadtest.vo.Board;
 import gd.fintech.fileuploadtest.vo.BoardForm;
 import gd.fintech.fileuploadtest.vo.Boardfile;
+import gd.fintech.fileuploadtest.vo.Comment;
 
 import java.awt.SystemTray;
 import java.io.File;
@@ -26,13 +27,17 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class BoardService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String PATH = "C:\\Users\\ECS\\Desktop\\springwork\\maven.1606093979999\\fileuploadtest\\src\\main\\webapp\\upload\\";
+	private final String PATH = "D:\\spring_git\\fileuploadtest\\src\\main\\webapp\\upload\\";
 	@Autowired BoardMapper boardMapper;
 	@Autowired BoardfileMapper boardfileMapper;
 	
 	//전체 데이터 양
 	public int getTotalRow() {
 		return boardMapper.totalRow();
+	}
+	//한개의 리스트가 갖고있는 댓글 총 수
+	public int getTotalBoardOneComment(int boardId) {
+		return boardMapper.totalBoardOneComment(boardId);
 	}
 	//페이징 작업한 리스트 출력
 	public List<Board> getBoardListByPage(int currentPage,int rowPerPage){
@@ -44,6 +49,16 @@ public class BoardService {
 		map.put("rowPerPage", rowPerPage);
 		
 		return boardMapper.selectBoardListByPage(map);
+	}
+	
+	//리스트 상세보기
+	public Board getBoardOne(int boardId, int currentPage, int rowPerPage) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int beginRow = (currentPage-1)*rowPerPage;
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage",rowPerPage);
+		map.put("boardId", boardId);
+		return boardMapper.selectBoardOne(map);
 	}
 	
 	//보드 추가 (파일 경로 및 저장 기능)
@@ -94,8 +109,13 @@ public class BoardService {
 		}
 	}
 	//파일 삭제
-	public void removeBoardOne(int boardId) {
-		boardfileMapper.deleteBoardfileOne(boardId);
+	public void removeBoardOne(int boardfileNo) {
+		String boardfileList = boardfileMapper.selectDeleteBoardFileName(boardfileNo);
+		File file = new File(this.PATH+boardfileList);
+		if(file.exists()) {
+			file.delete();
+		}
+		boardfileMapper.deleteBoardfileOne(boardfileNo); // db에 파일 이름 삭제	
 	}
 
 	//리스트 삭제
@@ -122,13 +142,13 @@ public class BoardService {
 	//리스트 수정 액션
 	public void updateBoard(BoardForm boardForm,int boardId) {
 		Board board = new Board();
+		List<Boardfile> boardfile = null;
 		
+		//board 수정
 		board.setBoardId(boardId);
 		board.setBoardTitle(boardForm.getBoardTitle());
 		board.setBoardContent(boardForm.getBoardContent());
 		boardMapper.updateBoard(board);
-		
-		List<Boardfile> boardfile = null;
 		
 		if(boardForm.getBoardfile() != null) {
 			boardfile = new ArrayList<Boardfile>();

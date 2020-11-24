@@ -22,11 +22,20 @@
 		DELETE FROM boardfile
 		WHERE board_id=#{boardId}
 	</delete>
-	<delete id="deleteBoardfileOne" parameterType="Integer">
-		DELETE FROM boardfile
-		WHERE board_id=#{boardId}
-	</delete>
+	
 	<!-- 삭제할 파일 이름 불러오기 -->
+	<delete id="deleteBoardfileOne" parameterType="Integer" >
+		DELETE FROM boardfile
+		WHERE boardfile_no = #{boardfileNo}
+	</delete>
+	<!-- upload안에 삭제할 파일 -->
+	<select id="selectDeleteBoardFileName" parameterType="Integer" resultType="java.lang.String">
+		SELECT boardfile_name
+		FROM boardfile
+		WHERE boardfile_no = #{boardfileNo}
+	</select>
+	
+	<!-- 삭제할 파일리스트 이름 불러오기 -->
 	<select id="selectBoardFileNameList" parameterType="Integer" resultType="java.lang.String">
 		SELECT boardfile_name
 		FROM boardfile

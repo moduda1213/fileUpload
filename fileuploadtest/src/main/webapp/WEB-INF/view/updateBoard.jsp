@@ -34,26 +34,7 @@ $(document).ready(function(){
 			alert('선택하지 않은 파일이 있습니다.');
 		}
 	})
-	$("#deleteFile").click(function(){
-			let ck = document.getElementsByClassName("ck");
-			console.log(ck.length+"<-- ck.length");
-
-			$.ajax({
-				url:'${pageContext.request.contextPath}/deleteFileOne',
-				type:'post',
-				dataType:'json',
-				data: {boardId : ${board.boardId}}
-				})
-				
-			for(let i=0;i<ck.length+1;i++){
-				let check = $('input[name='+i+']').is(':checked');
-				console.log(check+"<- check");
-				if(check){
-						$("#"+i).remove();
-					}
-				}
-		})
-	})
+})
 </script>
 </head>
 <body>
@@ -73,6 +54,17 @@ $(document).ready(function(){
 				<td><textarea cols="50" rows="3" name="boardContent">${board.boardContent}</textarea></td>
 			</tr>
 			<tr>
+				<th>첨부 파일</th>
+				<td>
+					<c:forEach var="bf" items="${board.boardfile}">
+						<div>
+							<a href="${pageContext.request.contextPath}/upload/${bf.boardfileName}">${bf.boardfileName } </a>
+							<a href="${pageContext.request.contextPath}/deleteFileOne?boardfileNo=${bf.boardfileNo}&boardId=${board.boardId}"> [파일 삭제]</a>
+						</div>
+					</c:forEach>
+				</td>
+			</tr>
+			<tr>
 				<th style="float:auto;">
 					파일 첨부
 					<br>
@@ -84,20 +76,8 @@ $(document).ready(function(){
 				</td>
 			</tr>
 			<tr>
-				<th>첨부 파일</th>
-				<td>
-					<c:forEach var="bf" items="${board.boardfile}" varStatus="status">
-						<div id="${status.index }">
-							<a href="${pageContext.request.contextPath}/upload/${bf.boardfileName}">${bf.boardfileName } </a>
-							<span><input type="checkbox" class="ck" name="${status.index }"></span>
-						</div>
-					</c:forEach>
-				</td>
-			</tr>
-			<tr>
 				<td colspan="3">
 					<button type="button" id="updateBoard">수정하기</button>
-					<button type="button" id="deleteFile" style="float:right">파일 삭제</button>
 				</td>
 			</tr>
 		</table>

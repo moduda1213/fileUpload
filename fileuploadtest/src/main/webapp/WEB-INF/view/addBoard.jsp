@@ -38,7 +38,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<h1>자료실 입력</h1>
+	<h1 id="head">자료실 입력</h1>
 	<a href="${pageContext.request.contextPath}/">index</a>
 	<form id="fileuploadForm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/addBoard">
 		<table border="1">

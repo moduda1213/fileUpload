@@ -12,5 +12,6 @@ public interface BoardfileMapper {
 	int deleteBoardfile(int boardId);
 	List<String> selectBoardFileNameList(int boardId);
 	int updateBoardfile(Boardfile boardfile);
-	int deleteBoardfileOne(int boardId);
+	int deleteBoardfileOne(int boardfileNo);
+	String selectDeleteBoardFileName(int boardfileNo);
 }

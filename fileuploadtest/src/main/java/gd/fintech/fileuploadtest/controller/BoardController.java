@@ -27,7 +27,6 @@ public class BoardController {
 			return "index";
 		}
 	
-	
 	//전체 리스트 페이징
 	@GetMapping("/boardList/{currentPage}")
 	public String boardList(Model model,
@@ -46,6 +45,25 @@ public class BoardController {
 		logger.debug("boardList size : " + boardList.size());
 		return "boardList";
 	}
+	//리스트 상세보기 (댓글 페이징)
+	@GetMapping("/boardOne/{boardId}/{currentPage}")
+	public String boardOne(Model model,
+						@PathVariable(name="boardId", required = true) int boardId,
+						@PathVariable(name="currentPage", required = true) int currentPage) {
+		int rowPerPage = 5;
+		int totalRow = boardService.getTotalBoardOneComment(boardId);
+		int lastPage = 0;
+		if(totalRow % rowPerPage != 0) {
+			lastPage = (totalRow / rowPerPage)+1;
+		}else {
+			lastPage = (totalRow / rowPerPage);
+		}
+		Board boardListOne=boardService.getBoardOne(boardId,currentPage,rowPerPage);
+		model.addAttribute("boardListOne",boardListOne);
+		model.addAttribute("lastPage",lastPage);
+		return "boardOne";
+	}
+	
 	//리스트 추가 폼
 	@GetMapping("/addBoard")
 	public String addBoard() {
@@ -83,10 +101,11 @@ public class BoardController {
 	}
 	
 	//file삭제
-	@PostMapping("/deleteFileOne")
-	public String deleteFileOne(@RequestParam(value="boardId") int boardId) {
-		boardService.removeBoardOne(boardId);
-		return "redirect:/updateBoard";
+	@GetMapping("/deleteFileOne")
+	public String deleteFileOne(@RequestParam(value="boardfileNo") int boardfileNo,
+								@RequestParam(value="boardId") int boardId) {
+		boardService.removeBoardOne(boardfileNo);
+		return "redirect:/updateBoard/"+boardId;
 	}
 }
 

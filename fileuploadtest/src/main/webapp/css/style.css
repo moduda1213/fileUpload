@@ -1,0 +1,24 @@
+@charset "UTF-8";
+h1#head{
+	margin:auto;
+	text-align:center;
+}
+div#boardStart{
+	padding: 30px 30px;
+	text-align:center;
+}
+a#boardStartBtn{
+	text-decoration: none;
+	font-weight: bold;
+	color:purple;
+}
+div.menu{
+	padding: 50px 300px;
+	margin:auto;
+}
+a.menuEl{
+	text-align:left;
+	font-weight: bold;
+	text-decoration: underline;
+	color:purple;
+}

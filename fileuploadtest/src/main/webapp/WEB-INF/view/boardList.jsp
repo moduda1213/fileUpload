@@ -5,31 +5,31 @@
 <head>
 <meta charset="UTF-8">
 <title>boardList</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css">
 </head>
 <body>
-	<h1>boardList</h1>
-	<a href="${pageContext.request.contextPath}/">index</a>
+	<h1 id="head">boardList</h1>
+	
+	<div class="menu">
+		<a class="menuEl" href="${pageContext.request.contextPath}/">index</a>
+		<a class="menuEl" href="${pageContext.request.contextPath}/addBoard">addBoard</a>
+	</div>
+	
 	<table border="1">
 		<tr>
-			<th>board_no</th>
+			<th>board_id</th>
 			<th>board_title</th>
-			<th>board_file</th>
-			<th>삭제</th>
-			<th>수정</th>
 		<tr>
 		<c:forEach var="b" items="${boardList }">
 			<tr>
 				<td>${b.boardId }</td>
-				<td>${b.boardTitle }</td>
 				<td>
-					<c:forEach var="bf" items="${b.boardfile }">
-						<div><a href="${pageContext.request.contextPath}/upload/${bf.boardfileName}">${bf.boardfileName }</a></div>
-					</c:forEach>
+					<a href="${pageContext.request.contextPath }/boardOne/${b.boardId}/1">${b.boardTitle}</a>
 				</td>
-				<td><a href="${pageContext.request.contextPath}/removeBoard?boardId=${b.boardId}&currentPage=${currentPage}">삭제</a>
-				<td><a href="${pageContext.request.contextPath}/updateBoard/${b.boardId}">수정</a>
 			</tr>
 		</c:forEach>
+		
+	<!-- 페이지에 따라 기능하는 페이지 넘기기 -->
 	</table>
 	<c:if test="${currentPage==1 && lastPage != 1}">
 		<a href="">처음으로</a>

@@ -9,5 +9,6 @@ public class Board {
 	private int boardId;
 	private String boardTitle;
 	private String boardContent;
-	private List<Boardfile> boardfile; //select 할 때 필요
+	private List<Boardfile> boardfile; //select 할 때 필요 | boardfile-> boardfileList로 수정
+	private List<Comment> commentList;
 }
